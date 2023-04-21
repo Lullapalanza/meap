@@ -1,0 +1,17 @@
+ControllerModules: # Allows defining a list of modules to be loaded for the config
+  MockModule: meap.controllers.controller_module
+  CombinedModule: meap.controllers.controller_module
+
+controllers:
+  test_hw_controller:
+    type: MockDevController
+    driver:
+      type: MockDriver
+
+  test_controller:
+    type: MockController
+
+  test_controller_2:
+    type: MockCController
+    ctrl_1: test_hew_controller
+    ctrl_2: test_controller
