@@ -23,16 +23,24 @@ def _generate_modules(modules_dict):
         defined_modules.append(controller_module(defined_modules))
     return defined_modules
 
-def _get_controller(defined_modules, controller_name, vals, existing_controllers=dict):
+def _get_controller(defined_modules, controller_name, vals, existing_controllers=dict, ref_labels=dict):
     ct_type = vals.pop("type")
+    ref_label = vals.pop("ref", None)
     for dm in defined_modules:
         if ct_type in dm.module_controllers.keys():
             # Check if any controller in existing controllers matches with the dict vals
             for key, value in vals.items():
                 if type(value) == str: # If str might point to a different controller
                     if value in existing_controllers.keys():
-                        vals[key] = existing_controllers.pop(value)
+                        vals[key] = existing_controllers.pop(value) # Existing controller ownership is given to new ct
+                    elif value in ref_labels.keys():
+                        vals[key] = ref_labels[value] # Existing controller stays the same, only the ref is given to new ct
+
             new_controller = dm.add_controller(ct_type, controller_name, **vals) # The controllers should somehow be resolved
+            
+            if ref_label:
+                ref_labels.update({ref_label: new_controller})
+
             return {new_controller.label: new_controller}
     
     raise UndefinedController(f"{controller_name} not found in" \
@@ -47,9 +55,10 @@ def _generate_controllers(controller_dict):
 
     new_tree = ControllerNode("root")
     new_controllers = {}
+    ref_labels = {}
     for controller_name, vals in controller_dict.get("controllers").items():
         new_controllers.update(
-            _get_controller(defined_modules, controller_name, vals, new_controllers)
+            _get_controller(defined_modules, controller_name, vals, new_controllers, ref_labels)
         )
     
     new_tree.update_subnodes(list(new_controllers.values()))
