@@ -31,7 +31,7 @@ def _get_controller(defined_modules, controller_name, vals, existing_controllers
             for key, value in vals.items():
                 if type(value) == str: # If str might point to a different controller
                     if value in existing_controllers.keys():
-                        vals[key] = existing_controllers[value]
+                        vals[key] = existing_controllers.pop(value)
             new_controller = dm.add_controller(ct_type, controller_name, **vals) # The controllers should somehow be resolved
             return {new_controller.label: new_controller}
     
