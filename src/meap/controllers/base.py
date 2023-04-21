@@ -93,6 +93,10 @@ class ControllerNode:
             next_node = getattr(next_node, subnode)
         next_node.value = value
 
+    def set_nodes(self, node_name_value_dict):
+        for key, val in node_name_value_dict.items():
+            self.set_node(key, val)
+
     def _save_state(self):
         """
         This state is saved to be retreived later
