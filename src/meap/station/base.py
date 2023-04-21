@@ -23,12 +23,17 @@ def _generate_modules(modules_dict):
         defined_modules.append(controller_module(defined_modules))
     return defined_modules
 
-def _get_controller(defined_modules, controller_name, vals):
+def _get_controller(defined_modules, controller_name, vals, existing_controllers=dict):
     ct_type = vals.pop("type")
     for dm in defined_modules:
         if ct_type in dm.module_controllers.keys():
-            new_controller = dm.add_controller(ct_type, controller_name, **vals)
-            return new_controller
+            # Check if any controller in existing controllers matches with the dict vals
+            for key, value in vals.items():
+                if type(value) == str: # If str might point to a different controller
+                    if value in existing_controllers.keys():
+                        vals[key] = existing_controllers[value]
+            new_controller = dm.add_controller(ct_type, controller_name, **vals) # The controllers should somehow be resolved
+            return {new_controller.label: new_controller}
     
     raise UndefinedController(f"{controller_name} not found in" \
         f"{[dm.module_controllers for dm in defined_modules]}")
@@ -41,9 +46,13 @@ def _generate_controllers(controller_dict):
     defined_modules = _generate_modules(modules)
 
     new_tree = ControllerNode("root")
+    new_controllers = {}
     for controller_name, vals in controller_dict.get("controllers").items():
-        new_cts = [_get_controller(defined_modules, controller_name, vals)]
-        new_tree.update_subnodes(new_cts)
+        new_controllers.update(
+            _get_controller(defined_modules, controller_name, vals, new_controllers)
+        )
+    
+    new_tree.update_subnodes(list(new_controllers.values()))
 
     return new_tree, defined_modules
 
