@@ -24,8 +24,8 @@ def _generate_modules(modules_dict):
     return defined_modules
 
 def _get_controller(defined_modules, controller_name, vals):
+    ct_type = vals.pop("type")
     for dm in defined_modules:
-        ct_type = vals.pop("type")
         if ct_type in dm.module_controllers.keys():
             new_controller = dm.add_controller(ct_type, controller_name, **vals)
             return new_controller
