@@ -16,7 +16,7 @@ class ControllerModule:
 
     def __init__(self, modules):
         self._submodules = {}
-        self._active_controllers = []
+        self._active_controllers = {}
 
         for rm in self.child_modules:
             for module in modules:
@@ -26,7 +26,7 @@ class ControllerModule:
     def add_controller(self, controller_class_name, *args, **kwargs):
         new_controller = self.module_controllers.get(controller_class_name)(*args, **kwargs)
 
-        self._active_controllers.append(new_controller)
+        self._active_controllers[new_controller.label] = new_controller
 
         return new_controller
 

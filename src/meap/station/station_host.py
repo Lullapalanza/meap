@@ -24,6 +24,12 @@ async def use_station_configuration(request: Request):
 
     return {}
 
+@app.post("/change_settings")
+async def change_settings(request: Request):
+    post_data = await request.json()
+    data = station.change_settings(post_data["settings"])
+    return {}
+
 @app.get("/station_methods")
 def get_station_methods():
     return {"methods": station.get_station_methods()}

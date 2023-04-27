@@ -31,4 +31,5 @@ class Client:
         return data
 
     def change_settings(self, setttings_and_values):
-        pass
+        response = requests.post(f"{self._station}/change_settings", json={"settings": setttings_and_values})
+        return response.json()

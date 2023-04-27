@@ -43,7 +43,7 @@ def _get_controller(defined_modules, controller_name, vals, existing_controllers
 
             return {new_controller.label: new_controller}
     
-    raise UndefinedController(f"{controller_name} not found in" \
+    raise UndefinedController(f"{controller_name} {ct_type} not found in" \
         f"{[dm.module_controllers for dm in defined_modules]}")
 
 def _generate_controllers(controller_dict):
