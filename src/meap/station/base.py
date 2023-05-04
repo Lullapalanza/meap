@@ -93,6 +93,9 @@ class Station:
         data = self.module_methods[name](self.controllers, *args, **kwargs)
         return data
 
+    def update_all_settings(self):
+        self.controllers.update_all()
+
     def new_configuration(self, user):
         if user in self._cache.keys():
             return user, self._cache[user]

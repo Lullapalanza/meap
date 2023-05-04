@@ -3,6 +3,7 @@ from fastapi import Request, FastAPI
 from meap.station.base import parse_config_to_station
 
 station = parse_config_to_station(os.environ["MEASUREMENT_CONFIG"])
+station.update_all_settings()
 
 app = FastAPI()
 

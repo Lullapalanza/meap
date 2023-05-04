@@ -97,6 +97,13 @@ class ControllerNode:
         for key, val in node_name_value_dict.items():
             self.set_node(key, val)
 
+    def update_all(self):
+        for subnode in self._subnodes:
+            subnode.update_all()
+        
+        for setting in self._settings:
+            setting.update_value()
+
     def _save_state(self):
         """
         This state is saved to be retreived later
