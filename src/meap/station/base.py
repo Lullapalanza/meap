@@ -25,7 +25,6 @@ def _generate_modules(modules_dict):
 
 def _get_controller(defined_modules, controller_name, vals, existing_controllers=dict, ref_labels=dict):
     ct_type = vals.pop("type")
-    ref_label = vals.pop("ref", None)
     for dm in defined_modules:
         if ct_type in dm.module_controllers.keys():
             # Check if any controller in existing controllers matches with the dict vals
@@ -38,8 +37,7 @@ def _get_controller(defined_modules, controller_name, vals, existing_controllers
 
             new_controller = dm.add_controller(ct_type, controller_name, **vals) # The controllers should somehow be resolved
             
-            if ref_label:
-                ref_labels.update({ref_label: new_controller})
+            ref_labels.update({f"ref_{new_controller.label}": new_controller})
 
             return {new_controller.label: new_controller}
     
