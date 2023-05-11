@@ -9,6 +9,7 @@ class ControllerModule:
     are propagated from the backend to some interfaces that would use the modules
     """
     label = "Default"
+    version = "0.1"
 
     module_controllers = {}
     module_methods = []

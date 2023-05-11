@@ -31,6 +31,10 @@ async def change_settings(request: Request):
     data = station.change_settings(post_data["settings"])
     return {}
 
+@app.get("/station_modules")
+def get_station_modules():
+    return {"modules": station.get_module_metadata()}
+
 @app.get("/station_methods")
 def get_station_methods():
     return {"methods": station.get_station_methods()}

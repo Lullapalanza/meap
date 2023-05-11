@@ -84,6 +84,9 @@ class Station:
             for name in md.module_methods:
                 self.module_methods.update({f"{md.label}.{name}": getattr(md, name)})
 
+    def get_module_metadata(self):
+        return {cm.label: cm.version for cm in self.controller_modules}
+
     def get_station_methods(self):
         return list(self.module_methods.keys())
 
