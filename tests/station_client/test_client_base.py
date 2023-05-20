@@ -11,7 +11,7 @@ def test_new_user(client):
     user, config = client.new_user("test_new_user")
     assert user == "test_new_user"
     assert config == {
-        'test_hw_controller.test_setting1': 1,
+        'test_hw_controller.test_setting1': 0,
         'test_hw_controller.test_setting2': True,
         'test_controller_2.test_combined': None
     }

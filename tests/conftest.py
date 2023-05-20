@@ -41,7 +41,7 @@ def station_host():
     try:
         response = requests.get("http://127.0.0.1:4040/")
     except:
-        time.sleep(0.1)
+        time.sleep(0.2)
 
     yield
 

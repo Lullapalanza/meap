@@ -25,5 +25,8 @@ def test_get_station_methods(station_host):
     data = response.json()
 
     assert data.get("methods") == [
-        "MockModule.example_method", "MockModule.wait", "MockModule.change_setting", "CombinedModule.combined"
+        "MockModule.example_method",
+        "MockModule.wait",
+        "MockModule.change_setting",
+        "CombinedModule.combined"
     ]
