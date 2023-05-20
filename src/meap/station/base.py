@@ -120,6 +120,7 @@ class Station:
     def get_current_configuration(self):
         current_controllers = {}
         self.controllers.update_controller_dict(current_controllers)
+        self._cache[self._current_user] = current_controllers
         return current_controllers
 
     def change_settings(self, setting_value_pairs):

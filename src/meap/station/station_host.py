@@ -39,6 +39,10 @@ def get_station_modules():
 def get_station_methods():
     return {"methods": station.get_station_methods()}
 
+@app.get("/get_current_configuration")
+def get_current_configuration():
+    return {"controllers": station.get_current_configuration()}
+
 @app.post("/station_methods/{method_name}")
 async def call_station_method(request: Request, method_name):
     post_data = await request.json()

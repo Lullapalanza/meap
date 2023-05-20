@@ -28,7 +28,10 @@ class Client:
         return data.get("methods")
 
     def get_current_configuration(self):
-        pass
+        response = requests.get(f"{self._address}/get_current_configuration")
+        data = response.json()
+
+        return data.get("controllers")
 
     def call_station_method(self, method, *args, **kwargs):
         response = requests.post(f"{self._address}/station_methods/{method}", json={"args": args, "kwargs": kwargs})
