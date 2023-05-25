@@ -1,5 +1,8 @@
 from contextlib import contextmanager
 
+
+DEFAULT_ATTRIBUTES = ["_label", "_settings", "_subnodes"]
+
 class ConflictingSettingError(Exception):
     pass
 
@@ -43,7 +46,7 @@ class StationNode:
     """
     Controllers are station-hw module interfaces. The state is controlled through controller nodes
     """
-    allowed_attributes = ["_label", "_settings", "_subnodes"]
+    allowed_attributes = []
 
     def __init__(self, label):
         self._label = label
@@ -52,7 +55,7 @@ class StationNode:
 
     def __setattr__(self, name, value):
         # Only allow certain labels
-        if name in self.allowed_attributes:
+        if name in self.allowed_attributes + DEFAULT_ATTRIBUTES:
             object.__setattr__(self, name, value)
         # Or if setting new settings/nodes
         elif issubclass(type(value), Setting) or issubclass(type(value), StationNode):

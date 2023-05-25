@@ -33,7 +33,7 @@ class ControllerModule:
 
 
 class DeviceController(StationNode):
-    allowed_attributes = ["_label", "_driver", "_settings", "_subnodes"]
+    allowed_attributes = ["_driver"]
     def __init__(self, label, driver):
         super().__init__(label)
         self._driver = driver
@@ -79,7 +79,7 @@ class MockDevController(DeviceController):
         pass
 
 class MockCController(StationNode):
-    allowed_attributes = ["_label", "_settings", "_subnodes", "device_1", "device_2"]
+    allowed_attributes = ["device_1", "device_2"]
 
     def __init__(self, label, ctrl_1, ctrl_2):
         super().__init__(label)
