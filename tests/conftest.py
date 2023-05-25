@@ -7,17 +7,17 @@ import uvicorn
 
 from pathlib import Path
 from multiprocessing import Process
-from meap.controllers.base import ControllerNode, Setting
+from meap.controllers.base import StationNode, Setting
 
 
 @pytest.fixture
 def basic_controller_tree():
-    new_tree = ControllerNode("root")
+    new_tree = StationNode("root")
     new_tree.update_settings([
         Setting("setting_1", 40e-9),
         Setting("setting_2", "string_value")
     ])
-    new_subtree = ControllerNode("node_1")
+    new_subtree = StationNode("node_1")
     new_subtree.update_settings([
         Setting("setting_3", [40, 50])
     ])

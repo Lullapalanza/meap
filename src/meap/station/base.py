@@ -5,7 +5,7 @@ well defined interface.
 Has some cache of states and IDs which can be used from the interface to run measurements, also propagates some lower
 HW defined controll methods that can be called. For example - instruments that play waveforms allow to define such waveforms
 """
-from meap.controllers.base import ControllerNode, Setting
+from meap.controllers.base import StationNode, Setting
 import yaml
 import importlib
 
@@ -51,7 +51,7 @@ def _generate_controllers(controller_dict):
     modules = controller_dict.get("ControllerModules")
     defined_modules = _generate_modules(modules)
 
-    new_tree = ControllerNode("root")
+    new_tree = StationNode("root")
     new_controllers = {}
     ref_labels = {}
     for controller_name, vals in controller_dict.get("controllers").items():
@@ -74,7 +74,7 @@ def parse_config_to_station(config_file):
 
 class Station:
     def __init__(self, controller_tree, controller_modules=[]):
-        self.controllers: ControllerNode = controller_tree
+        self.controllers: StationNode = controller_tree
         self.controller_modules = controller_modules
         self._cache = {}
         self._current_user = None

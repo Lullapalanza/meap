@@ -1,5 +1,5 @@
 import pytest
-from meap.controllers.base import Setting, ControllerNode, ConflictingSettingError
+from meap.controllers.base import Setting, StationNode, ConflictingSettingError
 
 def test_settings():
     new_setting = Setting("test_init")
@@ -14,7 +14,7 @@ def test_settings():
     assert new_setting.value == 1
 
 def test_controller():
-    new_controller = ControllerNode("test_controller")
+    new_controller = StationNode("test_controller")
     new_controller.update_settings([
         Setting("test_setting_1", True),
         Setting("test_setting_2")
@@ -25,7 +25,7 @@ def test_controller():
     assert new_controller.test_setting_1._in_memory_state == True
 
 def test_controller_assign():
-    new_controller = ControllerNode("test_controller")
+    new_controller = StationNode("test_controller")
     with pytest.raises(ConflictingSettingError):
         new_controller.update_settings([
             Setting("test_setting_1"),
@@ -38,10 +38,10 @@ def test_controller_assign():
     assert new_controller._settings == []
 
 def test_subnodes_assign():
-    new_controller = ControllerNode("test_controller")
+    new_controller = StationNode("test_controller")
     new_controller.update_subnodes([
-        ControllerNode("test_sub_1"),
-        ControllerNode("test_sub_2")
+        StationNode("test_sub_1"),
+        StationNode("test_sub_2")
     ])
 
 def test_state_saving(basic_controller_tree):

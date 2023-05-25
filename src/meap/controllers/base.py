@@ -39,7 +39,7 @@ class Setting:
         if self._value != self._in_memory_state:
             self._value = self._in_memory_state
 
-class ControllerNode:
+class StationNode:
     """
     Controllers are station-hw module interfaces. The state is controlled through controller nodes
     """
@@ -55,7 +55,7 @@ class ControllerNode:
         if name in self.allowed_attributes:
             object.__setattr__(self, name, value)
         # Or if setting new settings/nodes
-        elif issubclass(type(value), Setting) or issubclass(type(value), ControllerNode):
+        elif issubclass(type(value), Setting) or issubclass(type(value), StationNode):
             object.__setattr__(self, name, value)
         else:
             raise AttributeError(f"Tried to set {value} to {name}.")

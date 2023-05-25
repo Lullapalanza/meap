@@ -1,4 +1,4 @@
-from meap.controllers.base import Setting, ControllerNode
+from meap.controllers.base import Setting, StationNode
 
 
 class ControllerModule:
@@ -32,7 +32,7 @@ class ControllerModule:
         return new_controller
 
 
-class DeviceController(ControllerNode):
+class DeviceController(StationNode):
     allowed_attributes = ["_label", "_driver", "_settings", "_subnodes"]
     def __init__(self, label, driver):
         super().__init__(label)
@@ -78,7 +78,7 @@ class MockDevController(DeviceController):
     def _set_setting_value(self, value):
         pass
 
-class MockCController(ControllerNode):
+class MockCController(StationNode):
     allowed_attributes = ["_label", "_settings", "_subnodes", "device_1", "device_2"]
 
     def __init__(self, label, ctrl_1, ctrl_2):
@@ -101,7 +101,7 @@ class MockModule(ControllerModule):
 
     module_controllers = {
         "MockDevController": MockDevController,
-        "MockController": ControllerNode,
+        "MockController": StationNode,
         "MockCController": MockCController,
     }
 
